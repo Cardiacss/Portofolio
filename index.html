@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filbert - Portofolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        /* Custom CSS for the unique design elements */
+        body {
+            background-color: #000000;
+            color: #e0e0e0;
+            font-family: 'Roboto Mono', monospace;
+            font-weight: 300;
+            font-size: 14px;
+            overflow: hidden; /* Prevents scrollbars from the full-screen elements */
+        }
+
+        /* The main container for the staggered stripe effect */
+        .stripes-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        .stripe {
+            flex-grow: 1;
+            transition: background-color 0.3s ease;
+        }
+
+        /* The grainy/noise overlay effect */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none; /* Allows clicks to pass through */
+            z-index: 2;
+            opacity: 0.25;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuOCIgbnVtT2N0YXZlcz0iMyIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjxmZURpZmZ1c2VMaWdodGluZyBzdXJmYWNlU2NhbGU9IjEwIiBkaWZmdXNlQ29uc3RhbnQ9IjEiIGxpZ2h0aW5nLWNvbG9yPSJ3aGl0ZSI+PGZlRHNwb3QgeD0iMCIgeT0iMCIgej0iMCIvPjwvZmVEaWZmdXNlTGlnaHRpbmc+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI25vaXNlKSIvPjwvc3ZnPg==');
+        }
+
+        /* Main content container, placed above the background effects */
+        .content-wrapper {
+            position: relative;
+            z-index: 3;
+            height: 100vh;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Custom font for the main name */
+        h1 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+        
+        /* Navigation link styling */
+        #main-nav {
+           margin-top: 1.5rem;
+        }
+
+        #main-nav ul li a {
+            position: relative;
+            display: inline-block;
+            padding: 0.25rem;
+        }
+
+        #main-nav ul li a span {
+            transition: opacity 0.3s ease;
+        }
+        
+        #main-nav ul li a:hover {
+            opacity: 1;
+        }
+
+        /* Styling for the 'X' transition */
+        #main-nav ul li a::before,
+        #main-nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 1em; /* Fixed width relative to font-size for consistency */
+            height: 1px;
+            background-color: white;
+            top: 50%;
+            left: 50%;
+            transition: transform 0.3s ease;
+            transform-origin: center; /* Ensure scaling and rotation happens from the center */
+            transform: translateX(-50%) scaleX(0); /* Center the element and hide it initially */
+        }
+
+        /* Active state for the 'X' */
+        #main-nav ul li a.active span {
+            opacity: 0;
+        }
+
+        #main-nav ul li a.active::before {
+            transform: translateX(-50%) rotate(45deg) scaleX(1);
+        }
+
+        #main-nav ul li a.active::after {
+            transform: translateX(-50%) rotate(-45deg) scaleX(1);
+        }
+
+        /* White frame around the page */
+        .page-frame {
+            position: fixed;
+            top: 2.5rem;
+            left: 2.5rem;
+            right: 2.5rem;
+            bottom: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Page content styling */
+        .page {
+            display: none; /* Hide pages by default */
+        }
+        .page.active {
+            display: block; /* Show active page */
+        }
+    </style>
+</head>
+<body class="text-white">
+
+    <!-- Staggered background stripes -->
+    <div id="stripes" class="stripes-container"></div>
+
+    <!-- Grainy noise overlay -->
+    <div class="noise-overlay"></div>
+
+    <!-- White page frame -->
+    <div class="page-frame"></div>
+
+    <!-- Main content area -->
+    <div class="content-wrapper">
+        <!-- Top Left Section -->
+        <div class="absolute top-0 left-0 p-8 md:p-12 z-20">
+            <header>
+                <h1 class="text-4xl md:text-5xl font-semibold text-white">Filbert Valentino Hartono</h1>
+                <p class="mt-1 text-gray-400">Designer & Developer</p>
+                <!-- Persistent Top Navigation -->
+                <nav id="main-nav">
+                    <ul class="flex items-start space-x-4 text-sm">
+                        <li><a href="#home-content" class="text-gray-300 hover:text-white"><span>Home</span></a></li>
+                        <li><a href="#projects-content" class="text-gray-300 hover:text-white"><span>Projects</span></a></li>
+                        <li><a href="#contact-content" class="text-gray-300 hover:text-white"><span>Contact</span></a></li>
+                    </ul>
+                </nav>
+            </header>
+        </div>
+
+        <!-- Center Content Area -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center">
+            
+            <!-- Home Page -->
+            <div id="home-content" class="page">
+                 <h2 class="text-2xl font-semibold text-white">Welcome</h2>
+                 <p class="text-gray-400 mt-2">Hello! My name is Filbert, born on 10 feb 2004 in Jakarta, Indonesia. Im ready to learn more about web design</p>
+            </div>
+
+<!-- Projects Page -->
+            <div id="projects-content" class="page">
+                <h2 class="text-2xl font-semibold text-white">My Projects</h2>
+                <p class="text-gray-400 mt-2">A collection of my work and experiments.</p>
+                <div class="mt-8 flex justify-center gap-8">
+                    <!-- Project Box 1 -->
+                    <div class="border border-gray-600 rounded-lg p-6 w-64 h-40">
+                        <h3 class="text-lg font-semibold text-white">Project One</h3>
+                        <p class="text-sm text-gray-400 mt-2">A brief description of the first project.</p>
+                    </div>
+                    <!-- Project Box 2 -->
+                    <div class="border border-gray-600 rounded-lg p-6 w-64 h-40">
+                        <h3 class="text-lg font-semibold text-white">Project Two</h3>
+                        <p class="text-sm text-gray-400 mt-2">A brief description of the second project.</p>
+                    </div>
+                    <!-- Project Box 3 -->
+                    <div class="border border-gray-600 rounded-lg p-6 w-64 h-40">
+                        <h3 class="text-lg font-semibold text-white">Project Three</h3>
+                        <p class="text-sm text-gray-400 mt-2">A brief description of the third project.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Page -->
+            <div id="contact-content" class="page">
+                <h2 class="text-2xl font-semibold text-white">Get In Touch</h2>
+                <p class="text-gray-400 mt-2">You can reach me via email at filberthvalentino@gmail.com</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Stripe generation script
+            const stripesContainer = document.getElementById('stripes');
+            if (stripesContainer) {
+                const stripeCount = 12;
+                const baseGray = 0;
+                const colorIncrement = 0;
+                const widths = [100, 100, 100, 100, 100, 100, 98, 95, 93, 90, 88, 85];
+                for (let i = 0; i < stripeCount; i++) {
+                    const stripe = document.createElement('div');
+                    stripe.classList.add('stripe');
+                    const grayValue = baseGray + (i * colorIncrement);
+                    stripe.style.backgroundColor = `rgb(${grayValue}, ${grayValue}, ${grayValue})`;
+                    const width = widths[i] || 100;
+                    stripe.style.width = `${width}%`;
+                    stripesContainer.appendChild(stripe);
+                }
+            }
+
+            // Page navigation script
+            const allNavLinks = document.querySelectorAll('#main-nav a');
+            const allPages = document.querySelectorAll('.page');
+
+            function showPage(pageId) {
+                // Hide all pages
+                allPages.forEach(p => p.classList.remove('active'));
+                
+                // Show the target page
+                const targetPage = document.querySelector(pageId);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                }
+
+                // Update the active state ('X') on the navigation links
+                allNavLinks.forEach(l => {
+                    if (l.getAttribute('href') === pageId) {
+                        l.classList.add('active');
+                    } else {
+                        l.classList.remove('active');
+                    }
+                });
+            }
+
+            // Add click listeners to all navigation links
+            allNavLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    showPage(targetId);
+                });
+            });
+
+            // Set the initial page to be the home page
+            showPage('#home-content');
+        });
+    </script>
+
+</body>
+</html>
