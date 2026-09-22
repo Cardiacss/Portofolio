@@ -23,19 +23,34 @@ const NAV_ITEMS = [
 
 const PROJECTS = [
   {
-    title: "Eco Plan",
-    description: "A website about processing garbage, to know what type it is and etc.",
+    title: "Bakery Management System",
+    description: "A full-stack bakery management system for handling orders, inventory, and sales, built with React, Vite, NestJS, Prisma, and PostgreSQL via Supabase.",
+    url: "https://bakery-management-system-drab.vercel.app/",
+  },
+  {
+    title: "Bangkit Capstone Project",
+    description: "Eco Plan is A website for waste classification and sustainable disposal guidance.",
     url: "https://github.com/Shinta505/EcoPlan-Product_Capstone_Project-Bangkit2024",
   },
   {
-    title: "Student Deppresion",
-    description: "A website to predict depression tendencies in students",
+    title: "Student Depression",
+    description: "A web application designed to predict and assess depression tendencies in students.",
     url: "https://depression-prediction-99.streamlit.app/",
   },
   {
     title: "School Payment",
-    description: "A Website for students to pay and know how much they need to pay their tuition",
+    description: "A tuition management platform that allows students to track financial balances and settle payments online.",
     url: "https://github.com/Cardiacss/RPL",
+  },
+  {
+    title: "Membership and Benefit Administration",
+    description: "A website to manage member registration, dues tracking, partner networks, and suspension of pension benefits.",
+    url: "https://github.com/Cardiacss/dpsk-1",
+  },
+  {
+    title: "University Capstone Project",
+    description: "Creating a website that serves as a catalog of UKDW Yogyakarta graduates.",
+    url: "https://github.com/Cardiacss/Tugas-Akhir",
   },
 ];
 
@@ -243,7 +258,7 @@ export default function Portfolio() {
           }
         });
       },
-      { root, threshold: 0.5 }
+      { root, rootMargin: "-35% 0px -35% 0px", threshold: 0 }
     );
 
     Object.values(sectionRefs.current).forEach((el) => {
@@ -253,10 +268,14 @@ export default function Portfolio() {
     return () => observer.disconnect();
   }, []);
 
-  // Fade the wave background out as the user scrolls from Home into About.
+  // Fade the wave background gradually until the Contact section.
   function handleScroll(e) {
-    const scrollTop = e.currentTarget.scrollTop;
-    const fadeDistance = Math.max(1, window.innerHeight * 0.85);
+    const scrollContainer = e.currentTarget;
+    const scrollTop = scrollContainer.scrollTop;
+    const contactSection = sectionRefs.current.contact;
+    const fadeDistance = contactSection
+      ? Math.max(1, contactSection.offsetTop)
+      : Math.max(1, scrollContainer.scrollHeight - scrollContainer.clientHeight);
     const opacity = Math.max(0, 1 - scrollTop / fadeDistance);
     setWaveOpacity(opacity);
   }
@@ -293,6 +312,36 @@ export default function Portfolio() {
       }}
       className="text-white"
     >
+      <style>{`
+        .portfolio-scrollbar {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(156, 163, 175, 0.65) rgba(0, 0, 0, 0.35);
+        }
+
+        .portfolio-scrollbar::-webkit-scrollbar {
+          width: 10px;
+        }
+
+        .portfolio-scrollbar::-webkit-scrollbar-track {
+          background: rgba(0, 0, 0, 0.35);
+          border: 2px solid transparent;
+          background-clip: padding-box;
+        }
+
+        .portfolio-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(156, 163, 175, 0.65);
+          border: 2px solid transparent;
+          border-radius: 999px;
+          background-clip: padding-box;
+          min-height: 48px;
+        }
+
+        .portfolio-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: rgba(229, 231, 235, 0.8);
+          background-clip: padding-box;
+        }
+      `}</style>
+
       {/* Animated wave background, reactive to the cursor, fades on scroll */}
       <div
         style={{
@@ -326,7 +375,7 @@ export default function Portfolio() {
       <div
         ref={scrollContainerRef}
         onScroll={handleScroll}
-        className="scroll-smooth"
+        className="scroll-smooth portfolio-scrollbar"
         style={{
           position: "fixed",
           top: "2rem",
@@ -415,7 +464,10 @@ export default function Portfolio() {
           className="min-h-full flex flex-col items-center justify-center text-center px-6 md:px-10"
         >
           <h2 className="text-3xl md:text-4xl font-semibold text-white">
-            Hello, I'm Filbert Valentino Hartono
+            Hello, I'm{" "}
+            <span className="bg-gradient-to-r from-cyan-300 via-sky-400 to-blue-400 bg-clip-text text-transparent">
+              Filbert Valentino Hartono
+            </span>
           </h2>
           <p
             style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, opacity: 0.7 }}
@@ -465,13 +517,14 @@ export default function Portfolio() {
               and Google Cloud Platform through academic projects and a hands-on internship.
             </p>
             <p className="text-gray-400 mt-4 leading-relaxed">
-              I'm currently a Web Developer Intern at the Salatiga Christian School Pension Fund
-              (DPSK), where I develop and manage the organization's website. I enjoy solving real
-              problems with technology and collaborating closely with the people I build for, and I'm
-              looking to grow further as a Software Engineer, Web Developer, or IT professional.
+              I recently completed my internship as a Web Developer at the Salatiga Christian School
+              Pension Fund (DPSK) in January 2026, where I developed and managed the organization's
+              website. Now that I have graduated, I'm actively seeking opportunities as a Software
+              Engineer, Web Developer, or IT professional. I enjoy solving real problems with
+              technology and collaborating closely with the people I build for.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-2">
-              {["Laravel", "JavaScript", "PHP", "MySQL", "Google Cloud", "RESTful APIs"].map((skill) => (
+              {["Laravel", "JavaScript", "PHP", "MySQL", "Google Cloud", "RESTful APIs", "React", "Vite", "Axios", "NestJS", "Prisma", "PostgreSQL", "Supabase", "JWT", "Vercel"].map((skill) => (
                 <span
                   key={skill}
                   className="text-xs text-gray-300 border border-white/30 rounded-full px-3 py-1"
@@ -492,18 +545,18 @@ export default function Portfolio() {
         >
           <h2 className="text-2xl font-semibold text-white">My Projects</h2>
           <p className="text-gray-400 mt-2">A collection of my work and experiments.</p>
-          <div className="mt-8 flex flex-wrap justify-center gap-8">
+          <div className="mt-8 grid w-full max-w-5xl grid-cols-1 justify-items-center gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {PROJECTS.map((project) => (
               <a
                 key={project.title}
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative block w-64 h-40"
+                className="group relative block h-52 w-full max-w-xs"
               >
-                <div className="border border-gray-600 rounded-lg p-6 w-full h-full bg-gray-800/50 text-white flex flex-col justify-center transition-transform duration-300 group-hover:scale-105">
-                  <h3 className="text-lg font-semibold">{project.title}</h3>
-                  <p className="text-sm text-gray-400 mt-2">{project.description}</p>
+                <div className="flex h-full w-full flex-col justify-center rounded-lg border border-gray-600 bg-gray-800/50 p-6 text-white transition-transform duration-300 group-hover:scale-105">
+                  <h3 className="text-lg font-semibold leading-snug">{project.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-400">{project.description}</p>
                 </div>
                 <span className="pointer-events-none absolute inset-x-0 -bottom-4 flex justify-center opacity-0 scale-95 translate-y-1 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 group-hover:translate-y-0">
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-white/70 bg-black/80 px-4 py-1.5 text-xs tracking-wide text-white shadow-lg">
